@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title><%= title || 'Pokédex' %></title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <style>
+    body { background: #fafafa; }
+    h3 { margin-top: 30px; font-weight: 600; }
+    table thead { background-color: #00897B; color: white; }
+    td, th { text-align: center; vertical-align: middle; }
+    .badge-number {
+      background-color: #26a69a;
+      border-radius: 50%;
+      padding: 6px 10px;
+      color: white;
+      font-weight: bold;
+    }
+    .truncate {
+      max-width: 200px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="nav-wrapper teal">
+      <a href="/" class="brand-logo" style="margin-left: 10px;">Mi Sitio</a>
+      <ul id="nav-mobile" class="right hide-on-med-and-down">
+        <li><a href="/">Inicio</a></li>
+        <li><a href="/about">Acerca de</a></li>
+        <li><a href="/contact">Contacto</a></li>
+        <li><a href="/admin">Admin</a></li>
+        <li class="active"><a href="/pokedex">Pokédex</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="container">
+    <h3 class="center-align">Pokédex</h3>
+
+    <form action="/pokedex" method="POST" class="card-panel z-depth-2">
+      <div class="row">
+        <div class="input-field col s12 m6 l4">
+          <input id="nombre" type="text" name="nombre" required>
+          <label for="nombre">Nombre</label>
+        </div>
+        <div class="input-field col s12 m6 l4">
+          <input id="tipo" type="text" name="tipo" required>
+          <label for="tipo">Tipo</label>
+        </div>
+        <div class="input-field col s12 m6 l4">
+          <input id="habilidad" type="text" name="habilidad" required>
+          <label for="habilidad">Habilidad</label>
+        </div>
+        <div class="input-field col s12 m6 l4">
+          <input id="region" type="text" name="region" required>
+          <label for="region">Región</label>
+        </div>
+        <div class="input-field col s12">
+          <textarea id="descripcion" class="materialize-textarea" name="descripcion" required></textarea>
+          <label for="descripcion">Descripción</label>
+        </div>
+      </div>
+
+      <div class="row center-align">
+        <button type="submit" class="waves-effect waves-light btn teal">Agregar</button>
+        <a href="/" class="waves-effect waves-light btn grey">Volver</a>
+      </div>
+    </form>
+
+    <div class="card z-depth-2">
+      <div class="card-content">
+        <span class="card-title">Pokémon registrados (<%= pokedex.length %>)</span>
+
+        <% if (pokedex.length === 0) { %>
+          <p class="center-align">No hay Pokémon registrados aún.</p>
+        <% } else { %>
+          <div class="responsive-table">
+            <table class="striped centered highlight">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Nombre</th>
+                  <th>Tipo</th>
+                  <th>Habilidad</th>
+                  <th>Región</th>
+                  <th>Descripción</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% pokedex.forEach((p, i) => { %>
+                  <tr>
+                    <td><span class="badge-number"><%= i + 1 %></span></td>
+                    <td><%= p.nombre %></td>
+                    <td><%= p.tipo %></td>
+                    <td><%= p.habilidad %></td>
+                    <td><%= p.region %></td>
+                    <td class="truncate" title="<%= p.descripcion %>"><%= p.descripcion %></td>
+                  </tr>
+                <% }) %>
+              </tbody>
+            </table>
+          </div>
+        <% } %>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      if (typeof M !== 'undefined') M.AutoInit();
+    });
+  </script>
+</body>
+</html>

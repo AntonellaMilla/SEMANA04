@@ -9,6 +9,10 @@ app.set("views", path.join(__dirname, "views"));
 // Servir archivos estáticos desde "public"
 app.use(express.static(path.join(__dirname, "public")));
 
+// 👉 Middleware para procesar datos de formularios
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+
 // Importar rutas
 const mainRoutes = require("./routes/mainRoutes");
 app.use("/", mainRoutes);
@@ -16,3 +20,8 @@ app.use("/", mainRoutes);
 // Iniciar el servidor
 const PORT = 3000;
 app.listen(PORT, () => console.log(`Servidor en http://localhost:${PORT}`));
+
+// Middleware 404
+app.use((req, res, next) => {
+  res.status(404).render("notFound", { url: req.originalUrl });
+});

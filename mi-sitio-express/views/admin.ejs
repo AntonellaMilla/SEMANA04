@@ -2,8 +2,7 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title><%= title %></title>
+  <title>Admin</title>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" rel="stylesheet">
 </head>
 <body>
@@ -21,9 +20,22 @@
     </div>
   </nav>
 
-  <div class="container center-align" style="margin-top: 50px;">
-    <h1>Sobre Nosotros</h1>
-    <p>Este sitio fue creado como ejercicio de Express + EJS.</p>
+  <div class="container">
+    <h3 class="center-align">Mensajes recibidos</h3>
+    <a href="/contact" class="waves-effect waves-light btn">Ir al formulario</a>
+
+    <% if (messages.length === 0) { %>
+      <p>No hay mensajes aún.</p>
+    <% } else { %>
+      <ul class="collection">
+        <% messages.forEach(m => { %>
+          <li class="collection-item">
+            <strong><%= m.nombre %></strong> (<%= m.email %>)<br>
+            <em><%= m.mensaje %></em>
+          </li>
+        <% }) %>
+      </ul>
+    <% } %>
   </div>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
